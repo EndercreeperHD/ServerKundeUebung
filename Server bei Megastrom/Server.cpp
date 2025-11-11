@@ -22,19 +22,21 @@ Kunde* Server::findeKunde(int kdNr)
 
 void Server::empfangeVomController()
 {
-	cout << "------------- Server Verbindung ------------- " << endl;
-	cout << "Warte auf eine Clientanfrage mit accept() - blockierent!" << endl;
-	
-	// To Do
+	while (1) {
+		cout << "------------- Server Verbindung ------------- " << endl;
+		cout << "Warte auf eine Clientanfrage mit accept() - blockierent!" << endl;
 
-	cout << "Erfolgreiche Clientanfrage! Warte mit readLine() - blockierent!" << endl;
-	
-	// To Do
-	string text = "";
-	cout << "Empfangen von Controller: " << text << endl;
+		Socket* work = serverSocket->accept();
+		if (work == nullptr) continue;
 
-	// To Do
+		cout << "Erfolgreiche Clientanfrage! Warte mit readLine() - blockierent!" << endl;
 
-	
+		
+		string text = work->readLine();
+		cout << "Empfangen von Controller: " << text << endl;
+
+		work->close();
+		work = nullptr;
+	}
 }
 
