@@ -9,6 +9,8 @@ int main()
 	Kunde k1("Anton");
 	Kunde k2("Betty");
 	Server sv(54321);
+	sv.addKunden(&k1);
+	sv.addKunden(&k2);
 
 	sv.empfangeVomController();
 

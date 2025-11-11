@@ -10,13 +10,13 @@ private:
 	int kdNr;
 	string name;
 	int verbrauchAktuellerMonat[31][24];
-	int verbrauchVormonat[31];
+	int verbrauchVormonat[31] = {0};
 
 public:
 	Kunde(string n);
 	~Kunde(void);
 
-	void eintragenVerbauch(int tag, int* werte);
+	void eintragenVerbauch(int tag,int* werte);
 	int getKdNr();
 
 

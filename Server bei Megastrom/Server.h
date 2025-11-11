@@ -19,6 +19,8 @@ public:
 	Server(int port);
 	~Server(void);
 
+
+	void addKunden(Kunde* k);
 	Kunde* findeKunde(int kdNr);
 	void empfangeVomController();
 

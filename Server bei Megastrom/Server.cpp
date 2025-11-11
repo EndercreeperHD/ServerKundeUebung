@@ -3,6 +3,7 @@
 Server::Server(int port)
 {
 	serverSocket = new ServerSocket(port);
+	arbeitsSocket = nullptr;
 }
 
 Server::~Server(void)
@@ -18,6 +19,9 @@ Kunde* Server::findeKunde(int kdNr)
 	}
 	return nullptr;
 }
+void Server::addKunden(Kunde* k) {
+	kunden.push_back(k);
+}
 
 
 void Server::empfangeVomController()
@@ -26,17 +30,41 @@ void Server::empfangeVomController()
 		cout << "------------- Server Verbindung ------------- " << endl;
 		cout << "Warte auf eine Clientanfrage mit accept() - blockierent!" << endl;
 
-		Socket* work = serverSocket->accept();
-		if (work == nullptr) continue;
+		arbeitsSocket = serverSocket->accept();
+		if (arbeitsSocket == nullptr) continue;
 
 		cout << "Erfolgreiche Clientanfrage! Warte mit readLine() - blockierent!" << endl;
 
 		
-		string text = work->readLine();
+		string text = arbeitsSocket->readLine();
 		cout << "Empfangen von Controller: " << text << endl;
 
-		work->close();
-		work = nullptr;
+		if (text.substr(0, 5) == "sende") cout << "sende erkannt\n";
+		text.erase(0,6);
+		string kdnr;
+		for (int i = 0; text[i] != ' '; i++) {
+			kdnr += text[i];
+		}
+		cout << kdnr << "\n";
+		text.erase(0,kdnr.size()+1);
+		string d;
+		for (int i = 0; text[i] != ' '; i++) {
+			d += text[i];
+		}
+		cout << d << "\n";
+		text.erase(0, d.size()+1);
+
+		int help = 0;
+		int erg[24] = { 0 };
+		for (int i = 0; i < 24; i++) {
+			erg[i] = stoi(text.substr(help, text.find(';', help)));
+			help = text.find(';', help) + 1;
+		}
+		cout << "Wandel den String in ein Feld von Integern um		"; for (int i : erg) cout << i;
+		findeKunde(stoi(kdnr))->eintragenVerbauch(stoi(d),erg);
+		cout << "\n";
+		arbeitsSocket->close();
+		arbeitsSocket = nullptr;
 	}
 }
 
