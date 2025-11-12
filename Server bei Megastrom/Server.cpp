@@ -60,10 +60,11 @@ void Server::empfangeVomController()
 			erg[i] = stoi(text.substr(help, text.find(';', help)));
 			help = text.find(';', help) + 1;
 		}
-		cout << "Wandel den String in ein Feld von Integern um		"; for (int i : erg) cout << i;
+		cout << "Wandel den String in ein Feld von Integern um		"; for (int i : erg) cout << i << ' ';
 		findeKunde(stoi(kdnr))->eintragenVerbauch(stoi(d),erg);
 		cout << "\n";
 		arbeitsSocket->close();
+		delete arbeitsSocket;
 		arbeitsSocket = nullptr;
 	}
 }

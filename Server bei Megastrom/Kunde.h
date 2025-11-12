@@ -9,7 +9,7 @@ private:
 	static int autonr;
 	int kdNr;
 	string name;
-	int verbrauchAktuellerMonat[31][24];
+	int verbrauchAktuellerMonat[31][24] = { 0 };
 	int verbrauchVormonat[31] = {0};
 
 public:
